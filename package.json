@@ -11,6 +11,10 @@
     "build": "rollup -c",
     "prepare": "npm run build"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/streamerd/react-draggify.git"
+  },
   "keywords": [
     "react",
     "draggable",
