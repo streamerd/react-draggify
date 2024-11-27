@@ -1,6 +1,7 @@
 // WindowManager.js
-import React, { createContext, useContext, useState, useRef, useEffect } from 'react';
+import React, { createContext, useContext, useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { findOptimalPosition } from './utils/autoPosition';
 
 const WindowManagerContext = createContext({});
 const STORAGE_KEY = 'windowManagerState';
@@ -113,8 +114,20 @@ const WindowManagerProvider = ({ children }) => {
     });
   };
 
+  const getAutoPosition = useCallback((windowId, size = 1) => {
+    const occupiedPositions = Object.values(windows)
+      .filter(w => w.id !== windowId)
+      .map(w => w.pos);
+      
+    return findOptimalPosition(occupiedPositions, size);
+  }, [windows]);
+
+  const value = useMemo(() => ({
+    windows, registerWindow, updateWindow, getAutoPosition,
+  }), [windows, registerWindow, updateWindow, getAutoPosition]);
+
   return (
-    <WindowManagerContext.Provider value={{ windows, registerWindow, updateWindow }}>
+    <WindowManagerContext.Provider value={value}>
       {children}
     </WindowManagerContext.Provider>
   );

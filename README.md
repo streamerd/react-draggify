@@ -111,6 +111,24 @@ const StyledWindow = () => (
 const DraggableStyledWindow = withWindow(StyledWindow);
 ```
 
+### Auto-positioning
+
+Components can be automatically positioned using the `auto` value for the `pos` prop:
+
+```jsx
+// The component will be placed in the optimal available position
+<DraggableWindow pos="auto" />
+
+// You can still use specific positions if needed
+<DraggableWindow pos={5} />
+```
+
+The auto-positioning system:
+- Avoids window collisions
+- Optimizes space usage
+- Maintains aesthetic window arrangement
+- Considers window clustering and edge positions
+
 ## API Reference
 
 ### WindowManagerProvider
